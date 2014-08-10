@@ -1,6 +1,6 @@
 # Download and unzip the file
-#download.file("https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip","./exdata-data-household_power_consumption")
-#unzip("exdata-data-household_power_consumption.zip","household_power_consumption.txt")
+download.file("https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip","./exdata-data-household_power_consumption")
+unzip("exdata-data-household_power_consumption.zip","household_power_consumption.txt")
 
 # read the file 
 rawFile <- read.table("./household_power_consumption.txt", header = T, sep = ";", na.string="?")
