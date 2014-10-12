@@ -11,50 +11,43 @@ ExFile <- rawFile[SubFile,]
 
 # Extract the date and time function into date and time format
 library(lubridate)
-ExFile$Date <- dmy(ExFile$Date)
-ExFile$Time <- hms(ExFile$Time)
+ExFile$ts <- dmy_hms(paste(ExFile$Date, ExFile$Time))
+
 #Plot 4
 # 4.1 initialize the plot by setting the col and row
 par(mfrow = c(2, 2))
 # 4.2 plot1,1
-plot(ExFile$Global_active_power, type= "n", ann=F, xaxt = "n")
-title(xlab="",ylab = "Global active power",cex.lab = 0.6)
-lines(ExFile$Global_active_power)
-axis(side = 1, at =c(1,1440,2880), labels = c("Thu", "Fri", "Sat"))
+plot(ExFile$ts,ExFile$Global_active_power, type= "n", ann=F)
+title(xlab="",ylab = "Global active power")
+lines(ExFile$ts, ExFile$Global_active_power)
 
 # 4.3 plot1,2
-plot(ExFile$Voltage,type= "n", ann=F, xaxt = "n")
-lines(ExFile$Voltage, col = "black")
-title(xlab="datetime",ylab = "Voltage", cex.lab = 0.6)
-axis(side = 1, at =c(1,1440,2880), labels = c("Thu", "Fri", "Sat"))
+plot(ExFile$ts, ExFile$Voltage,type= "n", ann=F)
+lines(ExFile$ts,ExFile$Voltage, col = "black")
+title(xlab="datetime",ylab = "Voltage")
 
 #4.4 plot2,1
 with(ExFile,
-     plot(ExFile$Sub_metering_1,ann = F, type = "n", xaxt = "n"),
-     plot(ExFile$Sub_metering_2,ann = F, type = "n", xaxt = "n"),
-     plot(ExFile$Sub_metering_3,ann = F, type = "n", xaxt = "n"))
+     plot(ExFile$ts, ExFile$Sub_metering_1,ann = F, type = "n"),
+     plot(ExFile$ts, ExFile$Sub_metering_2,ann = F, type = "n"),
+     plot(ExFile$ts, ExFile$Sub_metering_3,ann = F, type = "n"))
 
-lines(ExFile$Sub_metering_1, col = "black")
-lines(ExFile$Sub_metering_2, col = "red")
-lines(ExFile$Sub_metering_3, col = "blue")
+lines(ExFile$ts, ExFile$Sub_metering_1, col = "black")
+lines(ExFile$ts, ExFile$Sub_metering_2, col = "red")
+lines(ExFile$ts, ExFile$Sub_metering_3, col = "blue")
 
-axis(side = 1, at =c(1,1440,2880), labels = c("Thu", "Fri", "Sat"))
+title(ylab = "Energy sub metering")
 
-title(ylab = "Energy sub metering", cex.lab = 0.6)
 
-legend("topright", lty = 1, col = c("black", "red", "blue"), 
-       legend = c("Sub_metering_1", "Sub_metering_2","Sub_metering_3"), 
-       cex = 0.8, bty = "n")
+legend("topright", inset(-1,-1),lty = 1, col = c("black", "red", "blue"), 
+       legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"),
+       cex = 0.5, y.intersp=0.1, xpd = 0.5, xjust=0, yjust=0, trace = T)
 
 #4.4 plot 2,2
-plot(ExFile$Global_reactive_power,ann = F, type = "n", xaxt = "n")
+plot(ExFile$ts, ExFile$Global_reactive_power,ann = F, type = "n")
+lines(ExFile$ts, ExFile$Global_reactive_power, col = "black")
+title(ylab = "Global_Reactive_Power", xlab = "datetime")
 
-lines(ExFile$Global_reactive_power, col = "black")
-
-axis(side = 1, at =c(1,1440,2880), labels = c("Thu", "Fri", "Sat"))
-
-title(ylab = "Global_Reactive_Power", xlab = "datetime", cex.lab = 0.6)
-
-
+# create PNG
 dev.copy(png, file = "plot4.png",width = 480, height = 480, units = "px")
 dev.off()
