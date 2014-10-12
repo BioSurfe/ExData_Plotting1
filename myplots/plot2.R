@@ -9,16 +9,13 @@ rawFile <- read.table("./household_power_consumption.txt", header = T, sep = ";"
 SubFile<- rawFile$Date %in% c('1/2/2007','2/2/2007')
 ExFile <- rawFile[SubFile,]
 
-# Extract the date and time function into date and time format
+# create a new column with time stamps
 library(lubridate)
-ExFile$Date <- dmy(ExFile$Date)
-ExFile$Time <- hms(ExFile$Time)
+ExFile$ts <- dmy_hms(paste(ExFile$Date, ExFile$Time))
 
 #Plot 2
-plot(ExFile$Global_active_power, type= "n", ann=F, xaxt = "n")
-title(xlab="",ylab = "Global active power (Kilowatts)")
-lines(ExFile$Global_active_power)
-axis(side = 1, at =c(1,1440,2880), labels = c("Thu", "Fri", "Sat"))
+plot(ExFile$ts, ExFile$Global_active_power, type="l", xlab="",ylab = "Global active power (Kilowatts)")
 
+#save the file
 dev.copy(png, file = "plot2.png",width = 480, height = 480, units = "px")
 dev.off()
