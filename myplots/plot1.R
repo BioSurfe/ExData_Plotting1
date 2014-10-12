@@ -18,5 +18,6 @@ ExFile$Time <- hms(ExFile$Time)
 hist(ExFile$Global_active_power, col = 'red', ann=F)
 title(main = "Global Active Power", xlab = "Global Active Power (Kilowatts)", ylab = "Frequency")
 
+
 dev.copy(png, file = "plot1.png",width = 480, height = 480, units = "px")
 dev.off()
