@@ -41,7 +41,7 @@ title(ylab = "Energy sub metering")
 
 legend("topright", inset(-1,-1),lty = 1, col = c("black", "red", "blue"), 
        legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"),
-       cex = 0.5, y.intersp=0.1, xpd = 0.5, xjust=0, yjust=0, trace = T)
+       cex = 0.5, y.intersp=0.8, xpd = 0.5, xjust=0, yjust=0, trace = T)
 
 #4.4 plot 2,2
 plot(ExFile$ts, ExFile$Global_reactive_power,ann = F, type = "n")
